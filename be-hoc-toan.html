@@ -1,77 +1,8 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Bé Học Toán – Rừng Số Vui</title>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#CDEFF7;--bg2:#A8E0C0;--card:#fff;--ink:#27365A;--g:#4DBB6A;--y:#FFD23F;--c:#FF7B6B;--b:#5AA7F5;--p:#B58CF5;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1C2B4A;--bg2:#1F4A3A;--card:#2A3B63;--ink:#F3F6FF;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#1C2B4A;--bg2:#1F4A3A;--card:#2A3B63;--ink:#F3F6FF;color-scheme:dark}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-*{box-sizing:border-box}
-html,body{margin:0;min-height:100%}
-body{background:linear-gradient(var(--bg),var(--bg2)) fixed;color:var(--ink);font-family:'Baloo 2','Segoe UI',system-ui,sans-serif;font-weight:500;font-size:20px}
-#app{max-width:560px;margin:0 auto;padding:14px 16px 40px}
-.top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
-.pill{background:var(--card);border-radius:99px;padding:4px 14px;font-weight:800;box-shadow:0 3px 0 #0002}
-.btn{border:0;border-radius:22px;font:inherit;font-weight:800;color:#27365A;cursor:pointer;box-shadow:0 6px 0 #0003;transition:transform .1s;min-height:64px}
-.btn:active{transform:translateY(4px);box-shadow:0 2px 0 #0003}
-:focus-visible{outline:4px solid #27365A;outline-offset:3px}
-.small{min-height:44px;padding:4px 14px;border-radius:99px;font-size:18px;background:var(--card);color:var(--ink)}
-.hero{display:flex;align-items:center;gap:12px;margin:8px 0 16px}
-.fox{font-size:76px;line-height:1;animation:bob 2.4s ease-in-out infinite}
-.fox.hop{animation:hop .5s}
-@keyframes bob{50%{transform:translateY(-8px)}}
-@keyframes hop{40%{transform:translateY(-26px) rotate(-8deg)}}
-.bubble{background:var(--card);border-radius:22px 22px 22px 6px;padding:10px 16px;font-size:22px;font-weight:700;flex:1;box-shadow:0 4px 0 #0002}
-h1{font-size:34px;line-height:1.1;margin:0 0 4px;font-weight:800}
-.seg{display:flex;gap:8px;margin-bottom:14px}
-.seg .btn{flex:1;min-height:48px;font-size:18px;background:var(--card);color:var(--ink);box-shadow:0 4px 0 #0002}
-.seg .btn.on{background:var(--y);color:#27365A;outline:3px solid #27365A}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.mode{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px 8px;min-height:120px;font-size:22px}
-.mode b{font-size:44px;line-height:1.1}
-.mode:last-child:nth-child(odd){grid-column:1/-1}
-.dots{display:flex;gap:5px;flex:1;justify-content:center}
-.dots i{width:14px;height:14px;border-radius:50%;background:var(--card);opacity:.6}
-.dots i.d{background:var(--g);opacity:1}.dots i.cur{opacity:1;outline:3px solid var(--ink)}
-.card{background:var(--card);border-radius:28px;padding:18px 14px;text-align:center;box-shadow:0 6px 0 #0002;margin-bottom:18px}
-.ask{font-size:24px;font-weight:800;margin:0 0 8px}
-.pics{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;font-size:38px;line-height:1.15;margin:6px 0}
-.pics span{animation:pop .35s both}
-@keyframes pop{from{transform:scale(0)}}
-.eq{font-size:56px;font-weight:800;letter-spacing:2px}
-.eq .q{display:inline-block;min-width:1.1em;border-bottom:5px dashed var(--c);color:var(--c)}
-.seq{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
-.seq b{min-width:54px;padding:8px 6px;border-radius:16px;background:var(--y);color:#27365A;font-size:38px}
-.seq b.q{background:transparent;border:4px dashed var(--c);color:var(--c)}
-.opts{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.opts.three{grid-template-columns:1fr 1fr 1fr}
-.opt{font-size:44px;padding:6px}
-.opt small{display:block;font-size:16px;font-weight:700;margin-top:-6px}
-.opt:disabled{opacity:.35;transform:none;box-shadow:none}
-.shake{animation:sh .35s}
-@keyframes sh{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
-.opt.t{font-size:26px;min-height:72px}
-.item{width:104px;padding:6px 4px 8px;border-radius:16px;background:#FFF8E1;color:#27365A;border:3px solid #27365A44;display:flex;flex-direction:column;align-items:center;line-height:1.1}
-.item span{font-size:44px}.item b{font-size:24px}.item small{font-size:14px;font-weight:700}
-.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
-.chips .btn{min-width:52px;box-shadow:0 3px 0 #0002}
-.btn.small.on{background:var(--y);color:#27365A;outline:3px solid #27365A}
-.notes{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:8px 0}
-.note{width:120px;height:64px;border-radius:10px;border:3px solid #27365A66;color:#27365A;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1}
-.note b{font-size:24px}.note small{font-size:14px;font-weight:700}
-.big{font-size:84px;text-align:center;letter-spacing:6px;margin:6px 0}
-.conf{position:fixed;top:-40px;font-size:30px;pointer-events:none;animation:fall linear forwards;z-index:9}
-@keyframes fall{to{transform:translateY(110vh) rotate(360deg)}}
-@media(prefers-reduced-motion:reduce){*{animation:none!important}}
-</style>
-</head>
-<body>
-<div id="app"></div>
-<script>
+const URL_PARAMS = new URLSearchParams(window.location.search);
+const START_MODE = [
+  'count','add','add20','sub','cmp','seq','clock','clock5','money','shop','bond'
+].includes(URL_PARAMS.get('mode')) ? URL_PARAMS.get('mode') : null;
+
 const R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
 const pick=a=>a[R(0,a.length-1)];
 const shuffle=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(x=>x[1]);
@@ -178,7 +109,16 @@ function result(){
   document.getElementById('again').onclick=()=>{S.q=0;S.score=0;next()};
   document.getElementById('home').onclick=home;
 }
-home();
-</script>
-</body>
-</html>
+
+function initGame(){
+  if (START_MODE) {
+    S.mode = START_MODE;
+    S.q = 0;
+    S.score = 0;
+    next();
+    return;
+  }
+  home();
+}
+
+initGame();
