@@ -4,82 +4,294 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Rừng Số Vui</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg1: #dff7ff;
-      --bg2: #b4f0c9;
-      --card: #ffffff;
-      --ink: #27365a;
-      --green: #57c97b;
-      --yellow: #ffd760;
-      --pink: #ff8d7d;
-      --blue: #75b9ff;
+      --bg2: #b7f0c8;
+      --bg3: #fef6d8;
+      --card: rgba(255,255,255,0.86);
+      --ink: #243861;
+      --green: #58cb7a;
+      --yellow: #ffd867;
+      --pink: #ff8f88;
+      --blue: #7bb7ff;
+      --purple: #b59af9;
+      --shadow: rgba(36, 56, 97, 0.18);
     }
+
     * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
     body {
       margin: 0;
       min-height: 100vh;
       display: grid;
       place-items: center;
       font-family: "Baloo 2", "Segoe UI", sans-serif;
-      background: linear-gradient(180deg, var(--bg1), var(--bg2));
+      background: linear-gradient(180deg, var(--bg1), var(--bg2) 55%, var(--bg3));
       color: var(--ink);
+      overflow-x: hidden;
+      position: relative;
     }
-    .container {
-      width: min(92vw, 560px);
-      background: rgba(255,255,255,0.45);
-      border: 4px solid rgba(39,54,90,0.12);
-      border-radius: 30px;
-      box-shadow: 0 12px 0 rgba(39,54,90,0.12);
-      padding: 28px 20px 22px;
-      text-align: center;
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(255,255,255,0.18);
+      backdrop-filter: blur(2px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.32s ease;
+      z-index: 15;
     }
-    .emoji {
-      font-size: 78px;
+
+    body.is-loading::before {
+      opacity: 1;
+    }
+
+    .page-shell {
+      width: min(92vw, 680px);
+      background: rgba(255,255,255,0.35);
+      border: 3px solid rgba(36, 56, 97, 0.1);
+      border-radius: 36px;
+      box-shadow: 0 16px 0 var(--shadow);
+      padding: 26px 22px 22px;
+      position: relative;
+      z-index: 2;
+      animation: rise 0.6s ease;
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(18px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
       margin-bottom: 8px;
-      animation: float 2.2s ease-in-out infinite;
     }
-    @keyframes float {
+
+    .badge {
+      background: rgba(255,255,255,0.9);
+      color: var(--ink);
+      border-radius: 999px;
+      padding: 6px 16px;
+      font-size: 1rem;
+      font-weight: 800;
+      box-shadow: 0 4px 0 rgba(36,56,97,0.08);
+    }
+
+    .hero {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: rgba(255,255,255,0.62);
+      border-radius: 28px;
+      padding: 16px 18px;
+      margin: 8px 0 28px;
+      box-shadow: inset 0 0 0 2px rgba(36,56,97,0.05);
+    }
+
+    .fox {
+      font-size: clamp(3.4rem, 8vw, 5rem);
+      line-height: 1;
+      filter: drop-shadow(0 5px 0 rgba(36,56,97,0.08));
+      animation: bob 2.4s ease-in-out infinite;
+    }
+
+    @keyframes bob {
       0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+      50% { transform: translateY(-8px); }
     }
-    h1 {
-      margin: 0 0 8px;
-      font-size: clamp(2rem, 5vw, 3rem);
-      line-height: 1.1;
+
+    .hero-text {
+      flex: 1;
     }
-    p {
-      margin: 0 0 22px;
-      font-size: 1.3rem;
+
+    .hero-text h1 {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 3.1rem);
+      line-height: 1.08;
+    }
+
+    .hero-text p {
+      margin: 4px 0 0;
+      font-size: 1.1rem;
       font-weight: 700;
+      color: rgba(36,56,97,0.8);
     }
-    .start-btn {
+
+    .label {
       display: inline-block;
-      text-decoration: none;
       background: var(--yellow);
       color: var(--ink);
-      border-radius: 24px;
-      padding: 16px 28px;
+      border-radius: 999px;
+      padding: 6px 16px;
+      font-size: 1rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+      box-shadow: 0 4px 0 rgba(36,56,97,0.12);
+    }
+
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .game-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--ink);
+      background: var(--card);
+      border: 3px solid rgba(36,56,97,0.08);
+      border-radius: 28px;
+      min-height: 150px;
+      padding: 18px 14px;
+      box-shadow: 0 8px 0 rgba(36,56,97,0.08);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .game-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.45), rgba(255,255,255,0));
+      pointer-events: none;
+    }
+
+    .game-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 0 rgba(36,56,97,0.08);
+      border-color: rgba(36,56,97,0.18);
+    }
+
+    .game-card:nth-child(1) { background: rgba(255,233,142,0.7); }
+    .game-card:nth-child(2) { background: rgba(176,231,255,0.72); }
+    .game-card:nth-child(3) { background: rgba(186,250,194,0.72); }
+    .game-card:nth-child(4) { background: rgba(255,189,170,0.7); }
+    .game-card:nth-child(5) { background: rgba(216,210,255,0.74); }
+    .game-card:nth-child(6) { background: rgba(255,245,183,0.72); }
+
+    .game-icon {
+      font-size: clamp(2.2rem, 5vw, 3rem);
+      line-height: 1;
+      position: relative;
+      z-index: 1;
+    }
+
+    .game-title {
       font-size: 1.5rem;
       font-weight: 800;
-      box-shadow: 0 8px 0 rgba(39,54,90,0.18);
-      transition: transform 0.12s ease;
+      line-height: 1.1;
+      position: relative;
+      z-index: 1;
     }
-    .start-btn:hover {
-      transform: translateY(-2px);
+
+    .game-desc {
+      font-size: 0.96rem;
+      font-weight: 700;
+      opacity: 0.8;
+      position: relative;
+      z-index: 1;
     }
-    .start-btn:active {
-      transform: translateY(4px);
-      box-shadow: 0 4px 0 rgba(39,54,90,0.18);
+
+    @media (max-width: 520px) {
+      .page-shell {
+        padding: 18px 14px 18px;
+      }
+
+      .hero {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .game-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="emoji">🦊🌳</div>
-    <h1>Rừng Số Vui</h1>
-    <p>Chào bé! Hôm nay chúng ta cùng học toán thật vui nhé!</p>
-    <a class="start-btn" href="be-hoc-toan.html">Bắt đầu học</a>
+  <div class="page-shell">
+    <div class="topbar">
+      <div class="badge">🌿 Rừng Số Vui</div>
+      <div class="badge">⭐ Bé học toán</div>
+    </div>
+
+    <div class="hero">
+      <div class="fox">🦊</div>
+      <div class="hero-text">
+        <h1>Chào bé Java!</h1>
+        <p>Hôm nay mình cùng chơi các trò toán thật vui nhé!</p>
+      </div>
+    </div>
+
+    <div class="label">Chọn trò chơi</div>
+
+    <div class="game-grid">
+      <a class="game-card navigate-link" href="be-hoc-toan.html?mode=count">
+        <div class="game-icon">🔢</div>
+        <div class="game-title">Đếm số</div>
+        <div class="game-desc">Nhóm số đẹp yên tâm</div>
+      </a>
+
+      <a class="game-card navigate-link" href="be-hoc-toan.html?mode=add">
+        <div class="game-icon">➕</div>
+        <div class="game-title">Phép cộng</div>
+        <div class="game-desc">Cộng nhanh và đúng</div>
+      </a>
+
+      <a class="game-card navigate-link" href="be-hoc-toan.html?mode=sub">
+        <div class="game-icon">➖</div>
+        <div class="game-title">Phép trừ</div>
+        <div class="game-desc">Trừ đi một chút thôi</div>
+      </a>
+
+      <a class="game-card navigate-link" href="be-hoc-toan.html?mode=clock">
+        <div class="game-icon">⏰</div>
+        <div class="game-title">Đồng hồ</div>
+        <div class="game-desc">Biết giờ giấc mỗi ngày</div>
+      </a>
+
+      <a class="game-card navigate-link" href="be-hoc-toan.html?mode=money">
+        <div class="game-icon">💵</div>
+        <div class="game-title">Tiền Việt Nam</div>
+        <div class="game-desc">Đếm tiền vui vui</div>
+      </a>
+
+      <a class="game-card navigate-link" href="be-hoc-toan.html?mode=bond">
+        <div class="game-icon">🧩</div>
+        <div class="game-title">Tách số</div>
+        <div class="game-desc">Gộp và tách số siêu dễ</div>
+      </a>
+    </div>
   </div>
+
+  <script>
+    document.querySelectorAll('.navigate-link').forEach(link => {
+      link.addEventListener('click', function (event) {
+        event.preventDefault();
+        document.body.classList.add('is-loading');
+        setTimeout(() => {
+          window.location.href = link.href;
+        }, 320);
+      });
+    });
+  </script>
 </body>
 </html>
